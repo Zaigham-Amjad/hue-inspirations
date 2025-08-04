@@ -183,7 +183,7 @@ const Index = () => {
                 advanced color analysis technology.
               </p>
               <p className="text-xs text-muted-foreground">
-                Made with Zaigham Amjad
+                Made by Zaigham Amjad
               </p>
             </div>
           </div>
