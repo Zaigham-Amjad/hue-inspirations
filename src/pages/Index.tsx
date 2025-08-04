@@ -8,6 +8,7 @@ import { HeroSection } from '@/components/hero/HeroSection';
 import { SearchBar } from '@/components/search/SearchBar';
 import { SearchFilters } from '@/components/search/SearchFilters';
 import { ArtworkGallery } from '@/components/gallery/ArtworkGallery';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { useArtworkSearch } from '@/hooks/useArtworkSearch';
 import { cn } from '@/lib/utils';
 
@@ -49,6 +50,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Theme Toggle - Fixed position */}
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
+
       {/* Hero Section - Show when no search is active */}
       {showHero && (
         <HeroSection onSearch={handleSearch} />
