@@ -11,6 +11,10 @@ import { ArtworkGallery } from '@/components/gallery/ArtworkGallery';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { useArtworkSearch } from '@/hooks/useArtworkSearch';
 import { cn } from '@/lib/utils';
+import { FeatureHighlights } from '@/components/home/FeatureHighlights';
+import { HowItWorks } from '@/components/home/HowItWorks';
+import { WhoBenefits } from '@/components/home/WhoBenefits';
+import { HomeStructuredData } from '@/components/seo/HomeStructuredData';
 
 const Index = () => {
   const [showHero, setShowHero] = useState(true);
@@ -58,6 +62,16 @@ const Index = () => {
       {/* Hero Section - Show when no search is active */}
       {showHero && (
         <HeroSection onSearch={handleSearch} />
+      )}
+
+      {/* Home Content Sections */}
+      {showHero && (
+        <main role="main" className="max-w-7xl mx-auto px-6 py-12 md:py-16 animate-fade-in">
+          <FeatureHighlights />
+          <HowItWorks />
+          <WhoBenefits />
+          <HomeStructuredData />
+        </main>
       )}
 
       {/* Search Interface - Show when search is active */}
