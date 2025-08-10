@@ -102,22 +102,29 @@ export function ArtworkGallery({
 
   return (
     <div className={cn('space-y-8', className)}>
-      {/* Artwork Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {artworks.map((artwork) => (
-          <ArtworkCard
+      {/* Artwork Grid - Modern Masonry Layout */}
+      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+        {artworks.map((artwork, index) => (
+          <div 
             key={artwork.id}
-            artwork={artwork}
-            onViewDetails={onArtworkClick}
-            showColorPalette={false}
-            className="h-fit"
-          />
+            className="break-inside-avoid mb-6"
+            style={{ 
+              animationDelay: `${index * 50}ms`,
+            }}
+          >
+            <ArtworkCard
+              artwork={artwork}
+              onViewDetails={onArtworkClick}
+              showColorPalette={false}
+              className="w-full hover-scale animate-fade-in"
+            />
+          </div>
         ))}
       </div>
 
       {/* Loading More Content */}
       {isLoading && artworks.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
           <LoadingGrid count={8} />
         </div>
       )}

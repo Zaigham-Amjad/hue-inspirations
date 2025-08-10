@@ -101,21 +101,16 @@ const Explore = () => {
 
       {/* Search header */}
       <section className="sticky top-16 z-30 bg-background/95 backdrop-blur border-b border-border/50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col lg:flex-row gap-4 items-center">
-            <Link to="/" className="flex items-center gap-2 text-foreground hover:text-primary transition-colors">
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">H</span>
-              </div>
-              <span className="font-semibold hidden sm:inline">Hue Inspirations</span>
-            </Link>
-
-            <div className="flex-1 max-w-2xl w-full">
+            <div className="flex-1 max-w-4xl w-full">
               <SearchBar
                 value={filters.query}
                 onChange={(value) => updateFilters({ query: value })}
                 onSearch={handleSearch}
                 placeholder="Search artworks, artists, styles..."
+                hasActiveFilters={hasActiveFilters}
+                onShowFilters={() => {}}
               />
             </div>
 
@@ -126,22 +121,31 @@ const Explore = () => {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {(hasResults || isLoading) && (
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">
-                  {isSearching ? "Search Results" : "Featured Artworks"}
+          <div className="mb-12">
+            <div className="flex items-center justify-between mb-8">
+              <div className="space-y-2">
+                <h1 className="text-3xl md:text-4xl font-bold text-foreground bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+                  {isSearching ? "Search Results" : "Curated Collection"}
                 </h1>
                 {totalResults > 0 && (
+                  <p className="text-lg text-muted-foreground">
+                    {totalResults.toLocaleString()} beautiful artworks 
+                    {isSearching && <span> matching "{filters.query}"</span>}
+                  </p>
+                )}
+                {!isSearching && (
                   <p className="text-muted-foreground">
-                    {totalResults.toLocaleString()} artworks found
-                    {isSearching && <span> for "{filters.query}"</span>}
+                    Discover extraordinary artworks and extract stunning color palettes
                   </p>
                 )}
               </div>
 
               {(hasActiveFilters || isSearching) && (
-                <Button variant="ghost" onClick={handleReset} className="text-muted-foreground">
+                <Button 
+                  variant="outline" 
+                  onClick={handleReset} 
+                  className="text-muted-foreground hover:text-foreground hover:border-primary/30"
+                >
                   Clear all
                 </Button>
               )}

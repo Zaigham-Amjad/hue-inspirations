@@ -146,11 +146,11 @@ export function SearchBar({
         </div>
 
         {/* Search Suggestions */}
-        {showSuggestions && isFocused && suggestions.length > 0 && (
-          <div className="absolute top-full left-0 right-0 mt-2 bg-popover border border-border rounded-lg shadow-soft z-50">
-            <div className="py-2">
-              <div className="px-4 py-2 text-xs text-muted-foreground font-medium">
-                Suggestions
+        {showSuggestions && suggestions.length > 0 && (
+          <div className="absolute top-full left-0 right-0 mt-2 bg-popover/95 backdrop-blur-sm border border-border/50 rounded-xl shadow-glow z-50 animate-fade-in">
+            <div className="py-3">
+              <div className="px-4 py-2 text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                Popular Searches
               </div>
               {suggestions.map((suggestion, index) => (
                 <button
@@ -158,12 +158,37 @@ export function SearchBar({
                   type="button"
                   onClick={() => handleSuggestionClick(suggestion)}
                   className={cn(
-                    'w-full px-4 py-2 text-left text-sm hover:bg-accent hover:text-accent-foreground',
-                    'transition-colors duration-150 flex items-center gap-3'
+                    'w-full px-4 py-3 text-left text-sm hover:bg-accent/80 hover:text-accent-foreground',
+                    'transition-all duration-200 flex items-center gap-3 group'
                   )}
                 >
-                  <Search className="w-4 h-4 text-muted-foreground" />
-                  <span>{suggestion}</span>
+                  <Search className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <span className="font-medium">{suggestion}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Top Keyword Suggestions when empty */}
+        {showSuggestions && !value && (
+          <div className="absolute top-full left-0 right-0 mt-2 bg-popover/95 backdrop-blur-sm border border-border/50 rounded-xl shadow-glow z-50 animate-fade-in">
+            <div className="py-3">
+              <div className="px-4 py-2 text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                Trending Keywords
+              </div>
+              {SEARCH_SUGGESTIONS.slice(0, 8).map((suggestion, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  className={cn(
+                    'w-full px-4 py-3 text-left text-sm hover:bg-accent/80 hover:text-accent-foreground',
+                    'transition-all duration-200 flex items-center gap-3 group'
+                  )}
+                >
+                  <Search className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <span className="font-medium">{suggestion}</span>
                 </button>
               ))}
             </div>
