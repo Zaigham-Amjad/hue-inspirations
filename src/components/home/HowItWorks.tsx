@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, Eye, Download, ArrowRight, Sparkles } from "lucide-react";
+import { Search, Eye, Download, ArrowRight, Star } from "lucide-react";
 
 export function HowItWorks() {
   const steps = [
@@ -32,7 +32,7 @@ export function HowItWorks() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-muted/50 backdrop-blur-sm border border-border/50 rounded-full px-4 py-2 mb-6">
-            <Sparkles className="w-4 h-4 text-primary" />
+            <Star className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-foreground">Simple Process</span>
           </div>
           <h2 id="how-heading" className="text-3xl md:text-5xl font-bold text-foreground mb-6">

@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, Users, Palette, Monitor, Sparkles } from "lucide-react";
+import { CheckCircle2, Users, Palette, Monitor, Star } from "lucide-react";
 
 export function WhoBenefits() {
   const personas = [
@@ -92,7 +92,7 @@ export function WhoBenefits() {
                   {/* Stats or Badge */}
                   <div className="pt-4 border-t border-border/50">
                     <div className="inline-flex items-center gap-2 text-xs text-muted-foreground">
-                      <Sparkles className="w-3 h-3 text-primary" />
+                      <Star className="w-3 h-3 text-primary" />
                       <span>Instant workflow integration</span>
                     </div>
                   </div>

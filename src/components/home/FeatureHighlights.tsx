@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Palette, Search, Download, Zap, Sparkles, Target } from "lucide-react";
+import { Palette, Search, Download, Zap, Star, Target } from "lucide-react";
 
 export function FeatureHighlights() {
   const features = [
@@ -35,7 +35,7 @@ export function FeatureHighlights() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-sm border border-border/50 rounded-full px-4 py-2 mb-6">
-            <Sparkles className="w-4 h-4 text-primary" />
+            <Star className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-foreground">Core Features</span>
           </div>
           <h2 id="features-heading" className="text-3xl md:text-5xl font-bold text-foreground mb-6">
