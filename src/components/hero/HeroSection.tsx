@@ -1,136 +1,149 @@
 /**
- * 🎨 Inspiring hero section for color palette discovery
- * Sets the tone with beautiful design and clear value proposition
+ * 🎨 Modern hero section for Hue Inspirations
+ * Clean, inspiring design focused on brand storytelling
  */
 
-import { useState } from 'react';
-import { Palette, Sparkles, Search, ArrowRight } from 'lucide-react';
+import { Palette, Sparkles, Zap, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { SearchBar } from '@/components/search/SearchBar';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { SEARCH_SUGGESTIONS } from '@/lib/constants';
 
 interface HeroSectionProps {
-  onSearch: (query: string) => void;
   className?: string;
 }
 
-export function HeroSection({ onSearch, className }: HeroSectionProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = (query: string) => {
-    onSearch(query);
-  };
-
-  const handleSuggestionClick = (suggestion: string) => {
-    setSearchQuery(suggestion);
-    onSearch(suggestion);
-  };
-
-  const featuredSuggestions = SEARCH_SUGGESTIONS.slice(0, 6);
+export function HeroSection({ className }: HeroSectionProps) {
 
   return (
     <section className={cn(
-      'relative py-20 px-6 bg-gradient-hero overflow-hidden',
+      'relative min-h-screen flex items-center py-20 px-6 bg-gradient-hero overflow-hidden',
       className
     )}>
-      {/* Background Decoration */}
+      {/* Modern Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+        {/* Gradient Orbs */}
+        <div className="absolute top-20 right-20 w-96 h-96 bg-gradient-primary opacity-20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-secondary opacity-15 rounded-full blur-3xl" />
+        
+        {/* Abstract Shapes */}
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full opacity-40" />
+        <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-accent rounded-full opacity-30" />
+        <div className="absolute bottom-1/4 right-1/4 w-1 h-1 bg-secondary rounded-full opacity-50" />
+        
+        {/* Color Palette Preview - Abstract Representation */}
+        <div className="absolute top-32 right-32 hidden lg:flex gap-1 opacity-30">
+          <div className="w-4 h-12 bg-primary rounded-full" />
+          <div className="w-4 h-8 bg-accent rounded-full" />
+          <div className="w-4 h-16 bg-secondary rounded-full" />
+          <div className="w-4 h-10 bg-primary-glow rounded-full" />
+        </div>
       </div>
 
-      <div className="relative max-w-6xl mx-auto text-center">
-        {/* Hero Content */}
-        <div className="max-w-3xl mx-auto mb-12">
-          {/* Icon */}
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-2xl mb-6 shadow-glow">
-            <Palette className="w-8 h-8 text-primary-foreground" />
-          </div>
+      <div className="relative w-full max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Column - Hero Content */}
+          <div className="text-left">
+            {/* Brand Badge */}
+            <div className="inline-flex items-center gap-3 bg-background/80 backdrop-blur-sm border border-border/50 rounded-full px-6 py-3 mb-8 shadow-soft">
+              <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center">
+                <Palette className="w-4 h-4 text-primary-foreground" />
+              </div>
+              <span className="text-sm font-medium text-foreground">Color Discovery Platform</span>
+            </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Discover Colors from
-            <span className="block bg-gradient-primary bg-clip-text text-transparent">
-              Great Artworks
-            </span>
-          </h1>
+            {/* Main Headline */}
+            <h1 className="text-5xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
+              Discover
+              <span className="block bg-gradient-primary bg-clip-text text-transparent">
+                Inspiring Colors
+              </span>
+              <span className="block text-3xl lg:text-5xl text-muted-foreground font-normal mt-2">
+                from Masterpieces
+              </span>
+            </h1>
 
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-            Extract beautiful color palettes from the world's finest artworks. 
-            Find inspiration from the Art Institute of Chicago's collection 
-            and create your next masterpiece.
-          </p>
-
-          {/* Search Bar */}
-          <div className="mb-8">
-            <SearchBar
-              value={searchQuery}
-              onChange={setSearchQuery}
-              onSearch={handleSearch}
-              placeholder="Search for artworks, artists, or styles..."
-              className="max-w-2xl"
-            />
-          </div>
-
-          {/* Quick Suggestions */}
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground font-medium">
-              <Sparkles className="w-4 h-4 inline mr-2" />
-              Popular searches:
+            {/* Subheading */}
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-lg">
+              Transform art history into your creative toolkit. Extract professional color palettes 
+              from the world's greatest artworks and bring timeless beauty to your designs.
             </p>
-            <div className="flex flex-wrap gap-2 justify-center">
-              {featuredSuggestions.map((suggestion, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleSuggestionClick(suggestion)}
-                  className={cn(
-                    'text-xs bg-background/80 border-border/50 backdrop-blur-sm',
-                    'hover:bg-primary hover:text-primary-foreground',
-                    'hover:border-primary transition-all duration-200'
-                  )}
-                >
-                  {suggestion}
-                  <ArrowRight className="w-3 h-3 ml-1" />
-                </Button>
-              ))}
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <Button asChild size="lg" className="text-base px-8 py-6 shadow-glow">
+                <Link to="/explore">
+                  <Palette className="w-5 h-5 mr-2" />
+                  Explore Palettes
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild className="text-base px-8 py-6">
+                <Link to="/explore">
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  See Examples
+                </Link>
+              </Button>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-primary" />
+                <span>Instant Extraction</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Download className="w-4 h-4 text-primary" />
+                <span>Export Ready</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span>AI Powered</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Features */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-secondary rounded-xl mx-auto mb-4 flex items-center justify-center">
-              <Search className="w-6 h-6 text-secondary-foreground" />
-            </div>
-            <h3 className="font-semibold text-foreground mb-2">Instant Search</h3>
-            <p className="text-sm text-muted-foreground">
-              Find artworks by keyword, artist, style, or historical period
-            </p>
-          </div>
+          {/* Right Column - Visual Elements */}
+          <div className="relative hidden lg:block">
+            {/* Mock Color Palette Cards */}
+            <div className="space-y-6">
+              {/* Featured Palette Card */}
+              <div className="bg-gradient-card backdrop-blur-sm border border-border/60 rounded-2xl p-6 shadow-card transform rotate-3 hover:rotate-1 transition-transform duration-500">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-gradient-primary rounded-xl" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Starry Night</h3>
+                    <p className="text-sm text-muted-foreground">Van Gogh, 1889</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1 h-8 bg-gradient-to-r from-blue-900 to-blue-700 rounded-lg" />
+                  <div className="flex-1 h-8 bg-gradient-to-r from-yellow-400 to-yellow-200 rounded-lg" />
+                  <div className="flex-1 h-8 bg-gradient-to-r from-gray-800 to-gray-600 rounded-lg" />
+                  <div className="flex-1 h-8 bg-gradient-to-r from-cyan-400 to-cyan-200 rounded-lg" />
+                </div>
+              </div>
 
-          <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-primary rounded-xl mx-auto mb-4 flex items-center justify-center">
-              <Palette className="w-6 h-6 text-primary-foreground" />
+              {/* Second Palette Card */}
+              <div className="bg-gradient-card backdrop-blur-sm border border-border/60 rounded-2xl p-6 shadow-card transform -rotate-2 hover:rotate-0 transition-transform duration-500 ml-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-gradient-secondary rounded-xl" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Water Lilies</h3>
+                    <p className="text-sm text-muted-foreground">Monet, 1919</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1 h-8 bg-gradient-to-r from-green-600 to-green-400 rounded-lg" />
+                  <div className="flex-1 h-8 bg-gradient-to-r from-blue-300 to-blue-100 rounded-lg" />
+                  <div className="flex-1 h-8 bg-gradient-to-r from-purple-400 to-purple-200 rounded-lg" />
+                  <div className="flex-1 h-8 bg-gradient-to-r from-pink-300 to-pink-100 rounded-lg" />
+                </div>
+              </div>
             </div>
-            <h3 className="font-semibold text-foreground mb-2">Smart Extraction</h3>
-            <p className="text-sm text-muted-foreground">
-              AI-powered color analysis extracts perfect palettes from any artwork
-            </p>
-          </div>
 
-          <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-secondary rounded-xl mx-auto mb-4 flex items-center justify-center">
-              <ArrowRight className="w-6 h-6 text-secondary-foreground" />
-            </div>
-            <h3 className="font-semibold text-foreground mb-2">Export Ready</h3>
-            <p className="text-sm text-muted-foreground">
-              Download palettes as SVG, Adobe ASE, or copy hex codes instantly
-            </p>
+            {/* Floating Color Dots */}
+            <div className="absolute -top-4 -left-4 w-6 h-6 bg-primary rounded-full opacity-60 animate-bounce" />
+            <div className="absolute top-20 -right-8 w-4 h-4 bg-accent rounded-full opacity-40" />
+            <div className="absolute -bottom-8 left-16 w-8 h-8 bg-secondary rounded-full opacity-30" />
           </div>
         </div>
       </div>

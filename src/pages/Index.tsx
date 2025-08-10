@@ -49,19 +49,10 @@ const Index = () => {
       <Header />
 
       {/* Hero */}
-      <HeroSection onSearch={handleSearch} />
-
-      {/* CTA to Explore */}
-      <section className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-center py-6">
-          <Button asChild>
-            <Link to="/explore">Explore color palettes</Link>
-          </Button>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Marketing Sections */}
-      <main role="main" className="max-w-7xl mx-auto px-6 py-12 md:py-16">
+      <main role="main">
         <FeatureHighlights />
         <HowItWorks />
         <WhoBenefits />
