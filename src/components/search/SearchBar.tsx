@@ -49,7 +49,6 @@ export function SearchBar({
   };
 
   const handleSuggestionClick = (suggestion: string) => {
-    onChange(suggestion);
     onSearch(suggestion);
     setShowSuggestions(false);
     inputRef.current?.blur();

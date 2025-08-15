@@ -124,7 +124,7 @@ export async function getArtworkById(id: number) {
 export async function getFeaturedArtworks(): Promise<ApiResponse> {
   return searchArtworks({
     query: 'is_public_domain:true',
-    limit: 12,
+    limit: 24,
     page: 1
   });
 }
