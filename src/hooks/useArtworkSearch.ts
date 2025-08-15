@@ -42,53 +42,54 @@ export function useArtworkSearch({
 
   const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
   const [totalResults, setTotalResults] = useState(0);
-  const [hasSearched, setHasSearched] = useState(!!initialQuery.trim() || autoSearch);
+  const [hasSearched, setHasSearched] = useState(false);
 
-  // Determine if we should fetch featured artworks or search results
-  const shouldFetchFeatured = !hasSearched && !filters.query.trim();
-  
-  // Query for search results
-  const searchQuery = useQuery({
-    queryKey: ['artworks', 'search', filters],
-    queryFn: () => searchArtworks(filters),
-    enabled: hasSearched && !!filters.query.trim(),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    refetchOnWindowFocus: false
-  });
-
-  // Query for featured artworks - always loads on initial page visit
-  const featuredQuery = useQuery({
-    queryKey: ['artworks', 'featured'],
-    queryFn: getFeaturedArtworks,
-    enabled: shouldFetchFeatured,
-    staleTime: 30 * 60 * 1000, // 30 minutes
-    refetchOnWindowFocus: false
-  });
-
-  // Use the appropriate query based on search state
-  const activeQuery = hasSearched ? searchQuery : featuredQuery;
-
-  // Update artworks when query data changes
-  useEffect(() => {
-    if (activeQuery.data) {
-      if (filters.page === 1) {
-        // First page or new search - replace artworks
-        setAllArtworks(activeQuery.data.data);
-      } else {
-        // Load more - append to existing artworks
-        setAllArtworks(prev => [...prev, ...activeQuery.data.data]);
-      }
-      
-      setTotalResults(activeQuery.data.pagination.total);
-    }
-  }, [activeQuery.data, filters.page]);
-
-  // Auto-search if enabled and query provided
+  // Initialize hasSearched based on initial conditions
   useEffect(() => {
     if (autoSearch && initialQuery.trim()) {
       setHasSearched(true);
     }
   }, [autoSearch, initialQuery]);
+
+  // Determine if we should fetch featured artworks or search results
+  const shouldFetchSearch = hasSearched && filters.query.trim();
+  const shouldFetchFeatured = !hasSearched || !filters.query.trim();
+  
+  // Query for search results
+  const searchQuery = useQuery({
+    queryKey: ['artworks', 'search', filters],
+    queryFn: () => searchArtworks(filters),
+    enabled: !!shouldFetchSearch,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false
+  });
+
+  // Query for featured artworks - loads automatically when no search
+  const featuredQuery = useQuery({
+    queryKey: ['artworks', 'featured'],
+    queryFn: getFeaturedArtworks,
+    enabled: !!shouldFetchFeatured,
+    staleTime: 30 * 60 * 1000, // 30 minutes
+    refetchOnWindowFocus: false
+  });
+
+  // Use the appropriate query based on search state
+  const activeQuery = shouldFetchSearch ? searchQuery : featuredQuery;
+
+  // Update artworks when query data changes
+  useEffect(() => {
+    if (activeQuery.data && 'data' in activeQuery.data) {
+      if (filters.page === 1) {
+        // First page or new search - replace artworks
+        setAllArtworks((activeQuery.data as any).data);
+      } else {
+        // Load more - append to existing artworks
+        setAllArtworks(prev => [...prev, ...(activeQuery.data as any).data]);
+      }
+      
+      setTotalResults((activeQuery.data as any).pagination.total);
+    }
+  }, [activeQuery.data, filters.page]);
 
   const updateFilters = useCallback((newFilters: Partial<SearchFilters>) => {
     setFilters(prev => ({
@@ -108,9 +109,14 @@ export function useArtworkSearch({
   }, []);
 
   const search = useCallback((query: string) => {
-    updateFilters({ query: query.trim(), page: 1 });
+    const trimmedQuery = query.trim();
+    setFilters(prev => ({
+      ...prev,
+      query: trimmedQuery,
+      page: 1
+    }));
     setHasSearched(true);
-  }, [updateFilters]);
+  }, []);
 
   const loadMore = useCallback(() => {
     if (!activeQuery.isLoading && hasNextPage) {
@@ -131,8 +137,8 @@ export function useArtworkSearch({
     setHasSearched(false);
   }, []);
 
-  const hasNextPage = activeQuery.data ? 
-    filters.page < activeQuery.data.pagination.total_pages : 
+  const hasNextPage = activeQuery.data && 'pagination' in activeQuery.data ? 
+    filters.page < (activeQuery.data as any).pagination.total_pages : 
     false;
 
   return {
