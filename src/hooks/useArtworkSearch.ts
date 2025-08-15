@@ -42,7 +42,7 @@ export function useArtworkSearch({
 
   const [allArtworks, setAllArtworks] = useState<Artwork[]>([]);
   const [totalResults, setTotalResults] = useState(0);
-  const [hasSearched, setHasSearched] = useState(false);
+  const [hasSearched, setHasSearched] = useState(!!initialQuery.trim() || autoSearch);
 
   // Determine if we should fetch featured artworks or search results
   const shouldFetchFeatured = !hasSearched && !filters.query.trim();
@@ -56,7 +56,7 @@ export function useArtworkSearch({
     refetchOnWindowFocus: false
   });
 
-  // Query for featured artworks (homepage)
+  // Query for featured artworks - always loads on initial page visit
   const featuredQuery = useQuery({
     queryKey: ['artworks', 'featured'],
     queryFn: getFeaturedArtworks,
